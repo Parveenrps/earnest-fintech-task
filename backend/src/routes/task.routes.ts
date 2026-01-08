@@ -1,11 +1,23 @@
-// task.routes.ts
 import { Router } from "express";
-import { auth } from "../middlewares/auth.middleware";
-import { getTasks, createTask, toggleTask, deleteTask } from "../controllers/task.controller";
+import {
+  getTasks,
+  createTask,
+  getTaskById,
+  updateTask,
+  deleteTask,
+  toggleTask,
+} from "../controllers/task.controller.js";
+import { authenticate } from "../middlewares/auth.middleware.js";
+
 const router = Router();
-router.use(auth);
+
+router.use(authenticate);
+
 router.get("/", getTasks);
 router.post("/", createTask);
-router.patch("/:id/toggle", toggleTask);
+router.get("/:id", getTaskById);
+router.patch("/:id", updateTask);
 router.delete("/:id", deleteTask);
+router.patch("/:id/toggle", toggleTask);
+
 export default router;
